@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pig Latin translator</title>
+</head>
+<body>
+
+<script>
+    phrase = prompt("Enter a phrase");
+  if(phrase==""||phrase==null){
+    alert("You didn't enter a phrase");
+  }
+    document.write("You entered - ", phrase,"<br> \n");
+
+
+    // Your pig-latin translation code here
+  //vowels, both upper and lower case
+     var vowels = ("aeiouAEIOU"); 
+  //split the phrase into an array of words
+    var words = phrase.split(" ");
+  //loops for each word in the array of words
+  for(var i=0; i<words.length; i++){
+    //if the first letter is a vowel
+    var startsWithVowel = vowels.includes(words[i][0]);
+    //if the second letter is a vowel
+    var secondIsVowel = vowels.includes(words[i][1]);
+
+    if (startsWithVowel){
+      document.write(words[i],"way ");
+    } else if (secondIsVowel) {
+      document.write(words[i].substring(1).concat(words[i][0],"ay "));
+    } else {
+      //if both the first and second letter are not vowels
+      document.write(words[i].substring(2).concat(words[i][0],words[i][1],"ay "));
+    }
+  }
+
+</script>
+
+</body>
+</html>
