@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF=8">
+    <title>Student grades</title>
+</head>
+<body>
+    <script>
+              // vanessa 01/26 Arielle Isabella 
+        const grades = "jim|25, sue|23, mary|34, ann|22, ted|28, frank|15, lisa|19, mike|30, ahn|26, vishaya|27";
+   
+        //Split each student in grades
+        let arr = grades.split(', ');
+        let lowest = 100;
+        let highest = 0;
+        let sum = 0;
+        //For each student in arr
+        for (let i = 0; i < arr.length; i++) {
+            let name = arr[i].split('|')[0];
+            //Change first letter into caps
+            name = name.charAt(0).toUpperCase() + name.slice(1);
+            let grade = parseInt(arr[i].split('|')[1]);
+            //If grade is lower than lowest, set lowest to grade
+            if (grade < lowest) {
+                lowest = grade;
+                //Else if grade is higher than highest, set highest to grade
+            } else if (highest < grade) {
+                highest = grade;
+            }
+            //Add to sum for later average calculation
+            sum += grade;
+            //Put student name - grade in array
+            arr[i] = name + " - " + grade;
+        }
+
+        //Sort array alphabetically
+        arr.sort();
+
+        //Print each student name and their grade
+        for (let i=0; i<arr.length; i++){
+            document.write(arr[i] + "<br>");
+        }
+
+        //Print number of students, lowest, highest, and average
+        document.write("<br>Number of students: " + arr.length + "<br>");
+        document.write("Lowest grade: " + lowest + "<br>");
+        document.write("Highest grade: " + highest + "<br>");
+        //Average calculation
+        document.write("Average grade: " + sum / arr.length + "<br>");
+    </script>
+</body>
+
+</html>
