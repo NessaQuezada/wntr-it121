@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+</head>
+<body>
+
+<h1>Functions & validation</h1>
+
+<form id="form1" action="#" onsubmit="return validateForm(this);">
+  first name: <input type="text" name="firstname"><br>
+  last name: <input type="text" name="lastname"><br>
+  password: <input type="text" name="password"><br>
+
+  <button >Check</button>
+</form>
+
+<hr><div id="message"></div>
+
+<script>
+
+  const validateForm = (myForm) => {
+
+    // add validatePassword function here
+    function validatePassword(password) {
+        //Check if password is at least 8 characters long
+        if (password.length < 8) {
+          return false;
+        }
+        //Check if password contains at least one lowercase letter
+        if (password.search(/[a-z]/) < 0) {
+          return false;
+        }
+        //Check if password contains at least one uppercase letter
+        if (password.search(/[A-Z]/) < 0) {
+          return false;
+        }
+        return true;
+      }
+
+      let firstname = myForm.firstname.value; // get text of firstname field
+
+      /* Form validation code goes here
+      */
+      if (firstname == "") {
+        $("#message").html("First name is required");
+        return false;
+      }
+      let lastname = myForm.lastname.value; // get text of lastname field
+      if (lastname == "") {
+        $("#message").html("Last name is required");
+        return false;
+      }
+      let password = myForm.password.value; // get text of password field
+      if (password == "") {
+        $("#message").html("Password is required");
+        return false;
+      }
+      if (!validatePassword(password)) {
+        $("#message").html("Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, and one number");
+        return false;
+      }
+
+      // use this syntax to update 'message' DIV with appropriate wording
+      $("#message").html("Welcome " + firstname + " " + lastname + "! Your password is valid!");
+    
+
+    let firstname = myForm.firstname.value; // get text of firstname field
+    
+
+    // use this syntax to update 'message' DIV with appropriate wording
+    $("#message").html("message");
+
+    return false; // prevent page reload
+  }
+
+</script>
+
+</body>
+</html> 
