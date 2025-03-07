@@ -1,0 +1,166 @@
+<html>
+
+<head>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    src=http://api.openweathermap.org/data/2.5/forecast?id=524901
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <H3 />Daily Weather Forecast</h3>
+  <hr>
+  <form id="testform">
+    City: <input type="text" name="city">
+    State:
+    <select name="state">
+      <option value="AL">Alabama</option>
+      <option value="AK">Alaska</option>
+      <option value="AZ">Arizona</option>
+      <option value="AR">Arkansas</option>
+      <option value="CA">California</option>
+      <option value="CO">Colorado</option>
+      <option value="CT">Connecticut</option>
+      <option value="DE">Delaware</option>
+      <option value="FL">Florida</option>
+      <option value="GA">Georgia</option>
+      <option value="HI">Hawaii</option>
+      <option value="ID">Idaho</option>
+      <option value="IL">Illinois</option>
+      <option value="IN">Indiana</option>
+      <option value="IA">Iowa</option>
+      <option value="KS">Kansas</option>
+      <option value="IA">Iowa</option>
+      <option value="KY">Kentucky</option>
+      <option value="LA">Louisiana</option>
+      <option value="ME">Maine</option>
+      <option value="MD">Maryland</option>
+      <option value="ME">Maine</option>
+      <option value="MA">Massachusetts</option>
+      <option value="MI">Michigan</option>
+      <option value="MN">Minnesota</option>
+      <option value="MS">Mississippi</option>
+      <option value="MO">Missouri</option>
+      <option value="MT">Montana</option>
+      <option value="NE">Nebraska</option>
+      <option value="NV">Nevada</option>
+      <option value="NH">New Hampshire</option>
+      <option value="NJ">New Jersey</option>
+      <option value="NM">New Mexico</option>
+      <option value="NY">New York</option>
+      <option value="NC">North Carolina</option>
+      <option value="ND">North Dakota</option>
+      <option value="OH">Ohio</option>
+      <option value="OK">Oklahoma</option>
+      <option value="OR">Oregon</option>
+      <option value="PR">Puerto Rico</option>
+      <option value="PW">Palau</option>
+      <option value="PA">Pennsylvania</option>
+      <option value="RI">Rhode Island</option>
+      <option value="SC">South Carolina</option>
+      <option value="SD">South Dakota</option>
+      <option value="TN">Tennessee</option>
+      <option value="TX">Texas</option>
+      <option value="UT">Utah</option>
+      <option value="VT">Vermont</option>
+      <option value="VA">Virginia</option>
+      <option value="WA">Washington</option>
+      <option value="WV">West Virginia</option>
+      <option value="WI">Wisconsin</option>
+      <option value="WY">Wyoming</option>
+    </select>
+  </form>
+  <button>submit</button>
+  <div id="forecast"></div>
+
+
+  <script>
+    // change to your API
+    let API_KEY = "fc8a1e21189ff265482a738a06f5d134";
+
+    // daily forecast API - https://openweathermap.org/forecast16
+    // geocoding API - https://openweathermap.org/api/geocoding-api
+
+    //syntax error
+    /*fetch('api.openweathermap.org/data/2.5/forecast/daily?lat={lat}&lon={lon}&cnt={cnt}&appid={API_KEY}')
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));*/
+
+    // NOTE - api docs incorrectly show examples using http instead of https
+
+    const kelvinToF = (value) => {
+      var fahrenheit = (((Number(value) - 273.15) * 9) / 5) + 32;
+      return fahrenheit.toFixed(2);
+    }
+    var lat;
+    var lon;
+
+    async function test(cityName, stateCode) {
+      /*var link = 'https://api.openweathermap.org/geo/1.0/direct?q=' + cityName + ',' + stateCode + 'US&appid=' + API_KEY;
+      fetch(link)
+        .then(data => data.json())
+        .then(data => {lat = data[0].lat;lon = data[0].lon;})
+        .then(() => {
+          console.log("lat: " + lat + " lon: " + lon);
+        })
+      getForecast();*/
+      var link = 'https://api.openweathermap.org/geo/1.0/direct?q=' + cityName + ',' + stateCode + ',US&appid=' + API_KEY;
+      console.log(link);
+      fetch(link)
+        .then(data => data.json())
+        .then(data => {
+          let count = 5
+          link = 'https://api.openweathermap.org/data/2.5/forecast/?lat=' + data[0].lat + '&lon=' + data[0].lon + '&cnt=' + count + '&appid=' + API_KEY;
+          console.log(link);
+          fetch(link)
+            .then((response) => response.json())
+            .then((data) => getForecast(data.list))
+            .catch((err) => console.log(err));
+        })
+    }
+
+    function getForecast(theArray) {
+      for (const element of theArray) {
+        console.log(element);
+        let space = element.dt_txt.indexOf(" ");
+        document.write(element.dt_txt.slice(0, space));
+        document.write("<br>");
+        document.write(kelvinToF(element.main.temp_min) + " to " + kelvinToF(element.main.temp_max) + " fahrenheit");
+        document.write("<br>");
+        document.write(element.main.humidity + " humidity");
+        document.write("<br>");
+        document.write("<img src='http://openweathermap.org/img/wn/" + element.weather[0].icon + ".png'>");
+        document.write(element.weather[0].description);
+        document.write("<br>");
+        document.write("<br>");
+
+      }
+    }
+
+    $('button').on('click', (e) => {
+
+      // your code here
+      var cityName = document.getElementsByName('city')[0].value;
+      //Tests if city is empty or conrains a number
+      if (cityName == "" || /\d/.test(cityName)) {
+        //If city is empty or contains a number, it will alert the user
+        alert('Please enter a city');
+        return false;
+      }
+      console.log("city: " + cityName);
+      var state = document.getElementsByName('state')[0].value;
+      console.log("state: " + state);
+      //api thing wrong
+      test(cityName, state);
+
+
+
+      // disable button to prevent double-submit
+      $("button").disabled = true;
+
+    });
+
+  </script>
+</body>
+
+</html>
