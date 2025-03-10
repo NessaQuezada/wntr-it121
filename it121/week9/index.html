@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+  <canvas id="myCanvas" width="300" height="150" style="border:1px solid grey"></canvas>
+
+  <script>
+    const c = document.getElementById("myCanvas");
+    const ctx = c.getContext("2d");
+    ctx.fillStyle = "orange";
+    ctx.fillRect(0, 0, 300, 150);
+    ctx.beginPath();
+    ctx.fillStyle = "black";
+    ctx.arc(300, 50, 50, 0, 2 * Math.PI);
+    ctx.stroke();
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(0, 100, 50, 0, 2 * Math.PI);
+    ctx.stroke();
+    ctx.fill();
+    // Start a new Path
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(300, 150);
+    // Draw the Path
+    ctx.stroke();
+    ctx.lineWidth = 5;
+    ctx.beginPath();
+    ctx.moveTo(40, 0);
+    ctx.lineTo(340, 150);
+    // Draw the Path
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(-40, 0);
+    ctx.lineTo(260, 150);
+    // Draw the Path
+    ctx.stroke();
+    //ctx.rotate(26.5 * Math.PI / 180);
+    ctx.lineWidth = 1;
+    ctx.rotate(-18 * Math.PI / 180);
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, 50, 50);
+    ctx.translate(49, 49);
+    ctx.fillRect(0, 0, 50, 50);
+    ctx.translate(49, 49);
+    ctx.fillRect(0, 0, 50, 50);
+    ctx.translate(49, 49);
+    ctx.fillRect(0, 0, 50, 50);
+    ctx.translate(49, 49);
+    ctx.fillRect(0, 0, 50, 50);
+  </script>
+
+</body>
+
+</html>
